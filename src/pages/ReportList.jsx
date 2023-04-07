@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Icon, Menu, Table } from 'semantic-ui-react'
-import ReportService from './../services/ReportService';
+import ReportService from './../services/ReportService'
 
 export default function ReportList() {
     
@@ -12,7 +12,7 @@ export default function ReportList() {
     })
 
     return (
-        <div>
+        <div style={{marginLeft: '50px', marginTop: '100px', marginRight: '50px'}}>
             <Table celled>
                 <Table.Header>
                     <Table.Row>
@@ -25,6 +25,8 @@ export default function ReportList() {
                         <Table.HeaderCell>Diagnostic Detail</Table.HeaderCell>
                         <Table.HeaderCell>Report Date</Table.HeaderCell>
                         <Table.HeaderCell>Laborant Name</Table.HeaderCell>
+                        <Table.HeaderCell>Laborant Surname</Table.HeaderCell>
+                        <Table.HeaderCell>Laborant Address</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
 
@@ -40,6 +42,8 @@ export default function ReportList() {
                         <Table.Cell>{report.diagnosticDetail}</Table.Cell>
                         <Table.Cell>{report.reportDate}</Table.Cell>
                         <Table.Cell>{report.laborantName}</Table.Cell>
+                        <Table.Cell>{report.laborantSurname}</Table.Cell>
+                        <Table.Cell>{report.laborantAddress}</Table.Cell>
                     </Table.Row>
                     )))}
                 </Table.Body>
