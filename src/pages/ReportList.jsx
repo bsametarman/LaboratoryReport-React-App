@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { Icon, Menu, Table } from 'semantic-ui-react'
+import { useNavigate } from "react-router-dom";
 import ReportService from './../services/ReportService'
 
 export default function ReportList() {
     
     const [reports, setReports] = useState([])
+    const navigate = useNavigate();
     
     useEffect(()=>{
         let reportService = new ReportService()
         reportService.getReports().then(result => setReports(result.data))
     })
+
+    function getDetails(id){
+        console.log(id);
+        navigate("/ReportDetails", {state: {reportId: id,}})
+    }
 
     return (
         <div style={{marginLeft: '50px', marginTop: '100px', marginRight: '50px'}}>
@@ -27,6 +34,7 @@ export default function ReportList() {
                         <Table.HeaderCell>Laborant Name</Table.HeaderCell>
                         <Table.HeaderCell>Laborant Surname</Table.HeaderCell>
                         <Table.HeaderCell>Laborant Address</Table.HeaderCell>
+                        <Table.HeaderCell>Detail</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
 
@@ -44,6 +52,9 @@ export default function ReportList() {
                         <Table.Cell>{report.laborantName}</Table.Cell>
                         <Table.Cell>{report.laborantSurname}</Table.Cell>
                         <Table.Cell>{report.laborantAddress}</Table.Cell>
+                        <Table.Cell>
+                                <button class="ui inverted green button" onClick={() => getDetails(report.id)}>Detail</button>
+                        </Table.Cell>
                     </Table.Row>
                     )))}
                 </Table.Body>

@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import ReportList from './pages/ReportList';
 import Layout from './layouts/Layout';
 import Navi from './layouts/Navi';
+import ReportDetails from './pages/ReportDetails';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route exact path='/home' element={<Home />} />
             <Route exact path='/reports' element={<ReportList />} />
+            <Route exact path='/reportdetails' element={<ReportDetails />} />
           </Route>
         </Routes>
     </BrowserRouter>

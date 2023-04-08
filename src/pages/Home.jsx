@@ -12,7 +12,7 @@ export default function Home() {
             <div class="column twelve wide">
                 <div style={objStyle}>
                     Welcome to the our laboratory report system. <br/> <br/>
-                    Track report and laborants easly.
+                    Track reports and laborants easly.
                 </div>
             </div>
         </div>
