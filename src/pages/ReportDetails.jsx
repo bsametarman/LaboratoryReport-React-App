@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {useLocation, useParams} from 'react-router-dom';
+import {useLocation, useParams, useNavigate} from 'react-router-dom';
 import { Image, Item } from 'semantic-ui-react'
 import ReportService from './../services/ReportService'
 
@@ -8,11 +8,12 @@ export default function ReportDetails() {
     const [report, setReport] = useState([])
     const [isLoading, setLoading] = useState([])
     //const location = useLocation()
+    const navigate = useNavigate()
     const params = useParams()
+    const reportService = new ReportService()
     
     useEffect(()=>{
         setTimeout(() => {
-            let reportService = new ReportService()
             reportService.getReportById(params.reportId).then(result => {setReport(result.data); setLoading(false);})
         }, 500)
     }, [])
@@ -74,6 +75,10 @@ export default function ReportDetails() {
                     </tr>
                 </tbody>
                 </table>
+            </div>
+            <br/>
+            <div>
+                <button class="ui inverted red button" onClick={() => {reportService.deleteReportById(report.id); navigate('/reports'); }} >Delete</button>
             </div>
             <br/>
             <div id='images' class='center' style={{width:'800px', margin:'0 auto'}}>
