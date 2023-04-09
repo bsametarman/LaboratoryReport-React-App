@@ -15,7 +15,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route exact path='/home' element={<Home />} />
             <Route exact path='/reports' element={<ReportList />} />
-            <Route exact path='/reportdetails' element={<ReportDetails />} />
+            <Route exact path='/reportdetails/:reportId' element={<ReportDetails />} />
           </Route>
         </Routes>
     </BrowserRouter>

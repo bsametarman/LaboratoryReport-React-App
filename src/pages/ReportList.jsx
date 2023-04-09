@@ -15,7 +15,7 @@ export default function ReportList() {
 
     function getDetails(id){
         console.log(id);
-        navigate("/ReportDetails", {state: {reportId: id,}})
+        navigate(`/ReportDetails/${id}`, {state: {reportId: id,}})
     }
 
     return (

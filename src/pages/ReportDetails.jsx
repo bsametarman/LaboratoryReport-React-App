@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {useLocation} from 'react-router-dom';
+import {useLocation, useParams} from 'react-router-dom';
 import { Image, Item } from 'semantic-ui-react'
 import ReportService from './../services/ReportService'
 
@@ -7,15 +7,15 @@ export default function ReportDetails() {
 
     const [report, setReport] = useState([])
     const [isLoading, setLoading] = useState([])
-    const location = useLocation()
+    //const location = useLocation()
+    const params = useParams()
     
     useEffect(()=>{
         setTimeout(() => {
             let reportService = new ReportService()
-            reportService.getReportById(location.state.reportId).then(result => {setReport(result.data); setLoading(false);})
+            reportService.getReportById(params.reportId).then(result => {setReport(result.data); setLoading(false);})
         }, 500)
     }, [])
-    console.log(report.images)
 
     if(isLoading){
         return (
