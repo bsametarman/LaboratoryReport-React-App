@@ -4,7 +4,7 @@ import { Form, Select } from 'semantic-ui-react'
 import ReportService from './../services/ReportService'
 import LaborantService from './../services/LaborantService';
 
-export default function ReportDetails() {
+export default function UpdateReport() {
 
     const [report, setReport] = useState([])
     const [laborants, setLaborants] = useState([])
