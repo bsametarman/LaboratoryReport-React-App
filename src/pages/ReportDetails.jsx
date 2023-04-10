@@ -18,6 +18,11 @@ export default function ReportDetails() {
         }, 500)
     }, [])
 
+    function updateReport(id){
+        console.log(id);
+        navigate(`/UpdateReport/${id}`, {state: {reportId: id,}})
+    }
+
     if(isLoading){
         return (
             <div style={{margin: '100px'}}>Loading...</div>
@@ -79,6 +84,7 @@ export default function ReportDetails() {
             <br/>
             <div>
                 <button class="ui inverted red button" onClick={() => {reportService.deleteReportById(report.id); navigate('/reports'); }} >Delete</button>
+                <button class="ui inverted yellow button" onClick={() => updateReport(report.id)} >Update</button>
             </div>
             <br/>
             <div id='images' class='center' style={{width:'800px', margin:'0 auto'}}>

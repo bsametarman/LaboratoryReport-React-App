@@ -12,4 +12,8 @@ export default class ReportService{
     async deleteReportById(id){
         axios.delete(`http://localhost:8080/api/reports/delete/${id}`)
     }
+
+    async updateReportById(jsonData){
+        return axios.put(`http://localhost:8080/api/reports/update`, jsonData, {headers: {'Content-Type': 'application/json'}})
+    }
 }
