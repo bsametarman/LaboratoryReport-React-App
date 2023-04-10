@@ -7,6 +7,7 @@ import Layout from './layouts/Layout';
 import Navi from './layouts/Navi';
 import ReportDetails from './pages/ReportDetails';
 import UpdateReport from './pages/UpdateReport';
+import AddReport from './pages/AddReport';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route exact path='/reports' element={<ReportList />} />
             <Route exact path='/reportdetails/:reportId' element={<ReportDetails />} />
             <Route exact path='/updatereport/:reportId' element={<UpdateReport />} />
+            <Route exact path='/addreport' element={<AddReport />} />
           </Route>
         </Routes>
     </BrowserRouter>

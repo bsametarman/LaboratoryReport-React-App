@@ -20,6 +20,9 @@ export default function ReportList() {
 
     return (
         <div style={{marginLeft: '50px', marginTop: '100px', marginRight: '50px'}}>
+            <div>
+                <button class="ui inverted green button" onClick={() => navigate("/AddReport")}>Add Report</button>
+            </div>
             <Table celled>
                 <Table.Header>
                     <Table.Row>
@@ -53,7 +56,7 @@ export default function ReportList() {
                         <Table.Cell>{report.laborantSurname}</Table.Cell>
                         <Table.Cell>{report.laborantAddress}</Table.Cell>
                         <Table.Cell>
-                                <button class="ui inverted green button" onClick={() => getDetails(report.id)}>Detail</button>
+                            <button class="ui inverted green button" onClick={() => getDetails(report.id)}>Detail</button>
                         </Table.Cell>
                     </Table.Row>
                     )))}

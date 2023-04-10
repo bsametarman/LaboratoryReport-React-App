@@ -16,4 +16,8 @@ export default class ReportService{
     async updateReportById(jsonData){
         return axios.put(`http://localhost:8080/api/reports/update`, jsonData, {headers: {'Content-Type': 'application/json'}})
     }
+
+    async addReport(jsonData){
+        return axios.post(`http://localhost:8080/api/reports/add`, jsonData, {headers: {'Content-Type': 'application/json'}})
+    }
 }
