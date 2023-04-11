@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Form, Select } from 'semantic-ui-react'
+import { Form, Select, Grid } from 'semantic-ui-react'
 import ReportService from '../services/ReportService';
 import LaborantService from './../services/LaborantService';
+import ImageService from '../services/ImageService';
 
 export default function UpdateReport() {
 
     const [laborants, setLaborants] = useState([])
     const [isLoading, setLoading] = useState([])
+    const [formData, setFormData] = useState([])
 
     const navigate = useNavigate()
     const laborantService = new LaborantService()
-
     const reportService = new ReportService()
+    const imageService = new ImageService()
 
     let report = {
         "fileNo": '',
@@ -41,7 +43,7 @@ export default function UpdateReport() {
         });
     });
 
-    function createData() {
+    async function createData() {
         let jsonData = {
             "fileNo": report.fileNo,
             "patientName": report.patientName,
@@ -53,7 +55,15 @@ export default function UpdateReport() {
             "laborantId": report.laborantId
         }
         jsonData = JSON.stringify(jsonData)
-        reportService.addReport(jsonData);
+
+        let addedReport = await reportService.addReport(jsonData).then(result => result.data)
+        imageService.addImage(formData, addedReport.id)
+    }
+
+    const addImage = async (event) => {
+        const formData = new FormData()
+        setFormData(formData)
+        formData.append("image", event.target.files[0])
     }
 
     if(isLoading){
@@ -131,8 +141,20 @@ export default function UpdateReport() {
                 />
                 </Form.Group>
             </Form>
+            <br/>
+            <div class="ui middle aligned center aligned grid container">
+                <div class="ui middle aligned center aligned grid container">Add Image</div>
+                <div class="ui fluid segment">
+                    <input type="file" onChange={ addImage }/>
+                </div>
+            </div>
             <div>
-                <button class="ui inverted green button" onClick={() => { createData(); navigate('/reports'); }}>Save</button>
+                <Grid>
+                    <Grid.Column textAlign="center">
+                        <br/>
+                       <button class="ui inverted green button" onClick={() => { createData(); navigate("/reports") }}>Save</button>
+                    </Grid.Column>
+                </Grid>
             </div>
         </div>
     )

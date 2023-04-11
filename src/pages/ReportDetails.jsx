@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react'
 import {useLocation, useParams, useNavigate} from 'react-router-dom';
 import { Image, Item } from 'semantic-ui-react'
 import ReportService from './../services/ReportService'
+import ImageService from '../services/ImageService';
 
 export default function ReportDetails() {
 
     const [report, setReport] = useState([])
     const [isLoading, setLoading] = useState([])
+    const [formData, setFormData] = useState([])
     //const location = useLocation()
     const navigate = useNavigate()
     const params = useParams()
     const reportService = new ReportService()
+    const imageService = new ImageService()
     
     useEffect(()=>{
         setTimeout(() => {
@@ -21,6 +24,20 @@ export default function ReportDetails() {
     function updateReport(id){
         console.log(id);
         navigate(`/UpdateReport/${id}`, {state: {reportId: id,}})
+    }
+
+    function saveImage(reportId){
+        imageService.addImage(formData, reportId)
+    }
+
+    function refreshPage(){
+        window.location.reload(false)
+    }
+
+    const addImage = async (event) => {
+        const formData = new FormData()
+        setFormData(formData)
+        formData.append("image", event.target.files[0])
     }
 
     if(isLoading){
@@ -84,7 +101,12 @@ export default function ReportDetails() {
             <br/>
             <div>
                 <button class="ui inverted red button" onClick={() => {reportService.deleteReportById(report.id); navigate('/reports'); }} >Delete</button>
-                <button class="ui inverted yellow button" onClick={() => updateReport(report.id)} >Update</button>
+                <button class="ui inverted yellow button" onClick={() => updateReport(report.id)} >Update</button>  
+            </div>
+            <div class="ui fluid segment">
+                <b>Add Image </b>
+                <input type="file" onChange={ addImage }/>
+                <button class="ui inverted green button" onClick={() => {saveImage(report.id); refreshPage();} } >Save</button>
             </div>
             <br/>
             <div id='images' class='center' style={{width:'800px', margin:'0 auto'}}>
