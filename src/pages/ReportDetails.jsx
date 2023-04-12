@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {useLocation, useParams, useNavigate} from 'react-router-dom';
-import { Image, Item } from 'semantic-ui-react'
+import { Image, Item, Button, Segment } from 'semantic-ui-react'
 import ReportService from './../services/ReportService'
 import ImageService from '../services/ImageService';
 
@@ -32,6 +32,10 @@ export default function ReportDetails() {
 
     function refreshPage(){
         window.location.reload(false)
+    }
+
+    function deleteImage(imageId){
+        imageService.deleteImage(imageId)
     }
 
     const addImage = async (event) => {
@@ -121,6 +125,7 @@ export default function ReportDetails() {
                             <Image src={`data:image/png;base64, ${image.imageData}`} />
                         </Item.Description>
                         <Item.Extra><b>Image Type</b> {image.imageType}</Item.Extra>
+                        <Button inverted color='red' floated='right' onClick={() => { deleteImage(image.id); refreshPage();}}> Delete Image </Button>
                     </Item.Content>
                     </Item>
                 </Item.Group>
