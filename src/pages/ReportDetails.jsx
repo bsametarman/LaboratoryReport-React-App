@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {useLocation, useParams, useNavigate} from 'react-router-dom';
-import { Image, Item, Button, Segment } from 'semantic-ui-react'
+import { Image, Item, Button, Segment, ButtonGroup, Grid } from 'semantic-ui-react'
 import ReportService from './../services/ReportService'
 import ImageService from '../services/ImageService';
 
@@ -52,88 +52,96 @@ export default function ReportDetails() {
 
     return (
         <div class="center" style={{marginTop: '100px', marginRight: '200px', marginLeft: '200px'}}>
-            <div class="column">
-                <table class="ui center aligned table">
-                <tbody>
-                    <tr>
-                        <td class="center"><b>Id:</b></td>
-                        <td class="center">{report.id}</td>
-                    </tr>
-                    <tr>
-                        <td class="center"><b>File No:</b></td>
-                        <td class="center">{report.fileNo}</td>
-                    </tr>
-                    <tr>
-                        <td class="center"><b>Patient Name:</b></td>
-                        <td class="center">{report.patientName}</td>
-                    </tr>
-                    <tr>
-                        <td class="center"><b>Patient Surname:</b></td>
-                        <td class="center">{report.patientSurname}</td>
-                    </tr>
-                    <tr>
-                        <td class="center"><b>Patient Identity Number:</b></td>
-                        <td class="center">{report.patientIdentityNumber}</td>
-                    </tr>
-                    <tr>
-                        <td class="center"><b>Diagnostic Title:</b></td>
-                        <td class="center">{report.diagnosticTitle}</td>
-                    </tr>
-                    <tr>
-                        <td class="center"><b>Diagnostic Detail:</b></td>
-                        <td class="center">{report.diagnosticDetail}</td>
-                    </tr>
-                    <tr>
-                        <td class="center"><b>Report Date:</b></td>
-                        <td class="center">{report.reportDate}</td>
-                    </tr>
-                    <tr>
-                        <td class="center"><b>Laborant Name:</b></td>
-                        <td class="center">{report.laborantName}</td>
-                    </tr>
-                    <tr>
-                        <td class="center"><b>Laborant Surname:</b></td>
-                        <td class="center">{report.laborantSurname}</td>
-                    </tr>
-                    <tr>
-                        <td class="center"><b>Laborant Address:</b></td>
-                        <td class="center">{report.laborantAddress}</td>
-                    </tr>
-                </tbody>
-                </table>
-            </div>
+            <Grid>
+                <Grid.Row textAlign='center'>
+                    <Grid.Column>
+                        <div class="ui massive message">{report.patientName} {report.patientSurname}</div>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
+            <Segment>
+                <Grid columns='equal' divided>
+                    <Grid.Row textAlign='center'>
+                        <Grid.Column><b>Id:</b></Grid.Column>
+                        <Grid.Column><b>{report.id}</b></Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row textAlign='center'>
+                        <Grid.Column><b>File No:</b></Grid.Column>
+                        <Grid.Column><b>{report.fileNo}</b></Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row textAlign='center'>
+                        <Grid.Column><b>Patient Name:</b></Grid.Column>
+                        <Grid.Column><b>{report.patientName}</b></Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row textAlign='center'>
+                        <Grid.Column><b>Patient Surname:</b></Grid.Column>
+                        <Grid.Column><b>{report.patientSurname}</b></Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row textAlign='center'>
+                        <Grid.Column><b>Patient Identity Number:</b></Grid.Column>
+                        <Grid.Column><b>{report.patientIdentityNumber}</b></Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row textAlign='center'>
+                        <Grid.Column><b>Diagnostic Title:</b></Grid.Column>
+                        <Grid.Column><b>{report.diagnosticTitle}</b></Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row textAlign='center'>
+                        <Grid.Column><b>Diagnostic Detail:</b></Grid.Column>
+                        <Grid.Column><b>{report.diagnosticDetail}</b></Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row textAlign='center'>
+                        <Grid.Column><b>Report Date:</b></Grid.Column>
+                        <Grid.Column><b>{report.reportDate}</b></Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row textAlign='center'>
+                        <Grid.Column><b>Laborant Name:</b></Grid.Column>
+                        <Grid.Column><b>{report.laborantName}</b></Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row textAlign='center'>
+                        <Grid.Column><b>Laborant Surname:</b></Grid.Column>
+                        <Grid.Column><b>{report.laborantSurname}</b></Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row textAlign='center'>
+                        <Grid.Column><b>Laborant Address:</b></Grid.Column>
+                        <Grid.Column><b>{report.laborantAddress}</b></Grid.Column>
+                    </Grid.Row>
+                </Grid>
+            </Segment>
             <br/>
             <div>
-                <button class="ui inverted red button" onClick={() => {reportService.deleteReportById(report.id); navigate('/reports'); }} >Delete</button>
-                <button class="ui inverted yellow button" onClick={() => updateReport(report.id)} >Update</button>  
-            </div>
-            <div class="ui fluid segment">
-                <b>Add Image </b>
-                <input type="file" onChange={ addImage }/>
-                <button class="ui inverted green button" onClick={() => {saveImage(report.id); refreshPage();} } >Save</button>
+                <ButtonGroup>
+                    <Button style={{marginRight: '5px'}} inverted color='red' onClick={() => {reportService.deleteReportById(report.id); navigate('/reports'); }}>Delete Report</Button>
+                    <Button inverted color='yellow' onClick={() => updateReport(report.id)}>Update Report</Button>
+                </ButtonGroup> 
             </div>
             <br/>
-            <div id='images' class='center' style={{width:'800px', margin:'0 auto'}}>
-            {
-              
-              report.images.map((image => (
-                <Item.Group>
-                    <Item>
-                    <Item.Content>
-                        <Item.Header as='a'><b>Image Name:</b> {image.imageName}</Item.Header>
-                        <Item.Description>
-                            <Image src={`data:image/png;base64, ${image.imageData}`} />
-                        </Item.Description>
-                        <Item.Extra><b>Image Type</b> {image.imageType}</Item.Extra>
-                        <Button inverted color='red' floated='right' onClick={() => { deleteImage(image.id); refreshPage();}}> Delete Image </Button>
-                    </Item.Content>
-                    </Item>
-                </Item.Group>
-                )))
-            }
-                
-            </div>
+            <Segment clearing color='teal'>
+                <b>Add Image </b>
+                <input type="file" onChange={ addImage }/>
+                <Button inverted color='green' floated='right' onClick={() => {saveImage(report.id); refreshPage();} } >Save Image</Button>
+            </Segment>
+            <br/>
+            <Grid columns={3} divided>
+                {
+                    report.images.map((image => (
+                        <Grid.Column width={5}>
+                            <Item.Group>
+                                <Item>
+                                    <Item.Content>
+                                        <Item.Header as='a'><b>Image Name:</b> {image.imageName}</Item.Header>
+                                        <Item.Description>
+                                            <Image src={`data:image/png;base64, ${image.imageData}`} />
+                                        </Item.Description>
+                                        <Item.Extra><b>Image Type</b> {image.imageType}</Item.Extra>
+                                        <Button inverted color='red' floated='right' onClick={() => { deleteImage(image.id); refreshPage();}}> Delete Image </Button>
+                                    </Item.Content>
+                                </Item>
+                            </Item.Group>
+                        </Grid.Column>
+                    )))
+                }
+            </Grid>
+            <br/>
         </div>
     )
-
 }

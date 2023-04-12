@@ -9,7 +9,7 @@ export default function UpdateReport() {
 
     const [laborants, setLaborants] = useState([])
     const [isLoading, setLoading] = useState([])
-    const [formData, setFormData] = useState([])
+    const [formData, setFormData] = useState()
 
     const navigate = useNavigate()
     const laborantService = new LaborantService()

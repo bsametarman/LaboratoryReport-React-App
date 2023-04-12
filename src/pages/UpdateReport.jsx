@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
-import { Form, Select } from 'semantic-ui-react'
+import { Form, Select, Button, Grid } from 'semantic-ui-react'
 import ReportService from './../services/ReportService'
 import LaborantService from './../services/LaborantService';
 
@@ -131,9 +131,13 @@ export default function UpdateReport() {
                 />
                 </Form.Group>
             </Form>
-            <div>
-                <button class="ui inverted green button" onClick={() => { createData(); navigate('/reports'); }}>Save</button>
-            </div>
+            <Grid container>
+                <Grid.Row>
+                    <Grid.Column style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Button inverted color='green' floated='center' onClick={() => { createData(); navigate('/reports'); }}>Save</Button>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         </div>
     )
 }

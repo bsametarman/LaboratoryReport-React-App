@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { Icon, Menu, Table } from 'semantic-ui-react'
+import { Icon, Menu, Table, Button, ButtonGroup } from 'semantic-ui-react'
 import { useNavigate } from "react-router-dom";
 import ReportService from './../services/ReportService'
 
 export default function ReportList() {
     
     const [reports, setReports] = useState([])
+    const [isLoading, setLoading] = useState([])
     const navigate = useNavigate();
-    
+    const reportService = new ReportService()
+
     useEffect(()=>{
-        let reportService = new ReportService()
-        reportService.getReports().then(result => setReports(result.data))
+        setTimeout(() => {
+            reportService.getReports().then(result =>  {setReports(result.data); setLoading(false);})
+        }, 500)
     })
 
     function getDetails(id){
@@ -18,10 +21,16 @@ export default function ReportList() {
         navigate(`/ReportDetails/${id}`, {state: {reportId: id,}})
     }
 
+    if(isLoading){
+        return (
+            <div style={{margin: '100px'}}>Loading...</div>
+        );
+    }
+
     return (
         <div style={{marginLeft: '50px', marginTop: '100px', marginRight: '50px'}}>
             <div>
-                <button class="ui inverted green button" onClick={() => navigate("/AddReport")}>Add Report</button>
+                <Button inverted color='green' onClick={() => navigate("/AddReport")}>Add Report</Button>
             </div>
             <Table celled>
                 <Table.Header>
@@ -56,7 +65,10 @@ export default function ReportList() {
                         <Table.Cell>{report.laborantSurname}</Table.Cell>
                         <Table.Cell>{report.laborantAddress}</Table.Cell>
                         <Table.Cell>
-                            <button class="ui inverted green button" onClick={() => getDetails(report.id)}>Detail</button>
+                            <ButtonGroup>
+                                <Button style={{marginRight: '5px'}} inverted color='green' onClick={() => getDetails(report.id)}>Detail</Button>
+                                <Button inverted color='red' onClick={() => { reportService.deleteReportById(report.id); }} > Delete</Button>
+                            </ButtonGroup>
                         </Table.Cell>
                     </Table.Row>
                     )))}
