@@ -8,6 +8,7 @@ import Navi from './layouts/Navi';
 import ReportDetails from './pages/ReportDetails';
 import UpdateReport from './pages/UpdateReport';
 import AddReport from './pages/AddReport';
+import LaborantList from './pages/LaborantList';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route exact path='/reportdetails/:reportId' element={<ReportDetails />} />
             <Route exact path='/updatereport/:reportId' element={<UpdateReport />} />
             <Route exact path='/addreport' element={<AddReport />} />
+            <Route exact path='/laborants' element={<LaborantList />} />
           </Route>
         </Routes>
     </BrowserRouter>
