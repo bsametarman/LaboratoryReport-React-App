@@ -15,10 +15,11 @@ export default class LaborantService{
     }
 
     async updateLaborantById(jsonData){
+        console.log(jsonData)
         return axios.put(`http://localhost:8080/api/laborants/update`, jsonData, {headers: {'Content-Type': 'application/json'}})
     }
 
     async addLaborant(jsonData){
-        return axios.post(`http://localhost:8080/api/reports/add`, jsonData, {headers: {'Content-Type': 'application/json'}})
+        return axios.post(`http://localhost:8080/api/laborants/add`, jsonData, {headers: {'Content-Type': 'application/json'}})
     }
 }

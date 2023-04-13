@@ -51,7 +51,7 @@ export default function LaborantList() {
                         <Table.Cell>{laborant.id}</Table.Cell>
                         <Table.Cell>{laborant.laborantName}</Table.Cell>
                         <Table.Cell>{laborant.laborantSurname}</Table.Cell>
-                        <Table.Cell>{laborant.identityNumber}</Table.Cell>
+                        <Table.Cell>{laborant.laborantIdentityNumber}</Table.Cell>
                         <Table.Cell>{laborant.hospitalIdentityNumber}</Table.Cell>
                         <Table.Cell>{laborant.address}</Table.Cell>
                         <Table.Cell>{laborant.phoneNumber}</Table.Cell>

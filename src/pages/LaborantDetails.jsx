@@ -23,10 +23,6 @@ export default function LaborantDetails() {
         navigate(`/UpdateLaborant/${id}`, {state: {laborantId: id,}})
     }
 
-    function refreshPage(){
-        window.location.reload(false)
-    }
-
     if(isLoading){
         return (
             <div style={{margin: '100px'}}>Loading...</div>
@@ -58,7 +54,7 @@ export default function LaborantDetails() {
                     </Grid.Row>
                     <Grid.Row textAlign='center'>
                         <Grid.Column><b>Laborant Identity Number:</b></Grid.Column>
-                        <Grid.Column><b>{laborant.identityNumber}</b></Grid.Column>
+                        <Grid.Column><b>{laborant.laborantIdentityNumber}</b></Grid.Column>
                     </Grid.Row>
                     <Grid.Row textAlign='center'>
                         <Grid.Column><b>Hospital Identity Number:</b></Grid.Column>
