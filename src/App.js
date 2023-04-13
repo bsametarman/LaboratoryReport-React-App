@@ -9,6 +9,7 @@ import ReportDetails from './pages/ReportDetails';
 import UpdateReport from './pages/UpdateReport';
 import AddReport from './pages/AddReport';
 import LaborantList from './pages/LaborantList';
+import LaborantDetails from './pages/LaborantDetails';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route exact path='/updatereport/:reportId' element={<UpdateReport />} />
             <Route exact path='/addreport' element={<AddReport />} />
             <Route exact path='/laborants' element={<LaborantList />} />
+            <Route exact path='/laborantdetails/:laborantId' element={<LaborantDetails />} />
           </Route>
         </Routes>
     </BrowserRouter>
