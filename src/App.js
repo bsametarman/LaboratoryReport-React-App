@@ -11,6 +11,7 @@ import AddReport from './pages/AddReport';
 import LaborantList from './pages/LaborantList';
 import LaborantDetails from './pages/LaborantDetails';
 import UpdateLaborant from './pages/UpdateLaborant';
+import AddLaborant from './pages/AddLaborant';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route exact path='/laborants' element={<LaborantList />} />
             <Route exact path='/laborantdetails/:laborantId' element={<LaborantDetails />} />
             <Route exact path='/updatelaborant/:laborantId' element={<UpdateLaborant />} />
+            <Route exact path='/addlaborant' element={<AddLaborant />} />
           </Route>
         </Routes>
     </BrowserRouter>
