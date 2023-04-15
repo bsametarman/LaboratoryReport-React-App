@@ -12,7 +12,7 @@ export default function LaborantList() {
 
     useEffect(()=>{
         setTimeout(() => {
-            laborantService.getAllLaborants().then(result =>  {setLaborants(result.data); setLoading(false);})
+            laborantService.getAllLaborants().then(result =>  {setLaborants(result.data.data); setLoading(false);})
         }, 500)
     })
 

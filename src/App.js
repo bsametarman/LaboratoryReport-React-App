@@ -14,21 +14,22 @@ import UpdateLaborant from './pages/UpdateLaborant';
 import AddLaborant from './pages/AddLaborant';
 
 function App() {
+  document.title = 'Laboratory Report System'
+  
   return (
     <BrowserRouter>
     <Navi />
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route exact path='/home' element={<Home />} />
-            <Route exact path='/reports' element={<ReportList />} />
-            <Route exact path='/reportdetails/:reportId' element={<ReportDetails />} />
-            <Route exact path='/updatereport/:reportId' element={<UpdateReport />} />
-            <Route exact path='/addreport' element={<AddReport />} />
-            <Route exact path='/laborants' element={<LaborantList />} />
-            <Route exact path='/laborantdetails/:laborantId' element={<LaborantDetails />} />
-            <Route exact path='/updatelaborant/:laborantId' element={<UpdateLaborant />} />
-            <Route exact path='/addlaborant' element={<AddLaborant />} />
-          </Route>
+          <Route path="/" element={<Home />}></Route>
+          <Route exact path='/home' element={<Home />} />
+          <Route exact path='/reports' element={<ReportList />} />
+          <Route exact path='/reportdetails/:reportId' element={<ReportDetails />} />
+          <Route exact path='/updatereport/:reportId' element={<UpdateReport />} />
+          <Route exact path='/addreport' element={<AddReport />} />
+          <Route exact path='/laborants' element={<LaborantList />} />
+          <Route exact path='/laborantdetails/:laborantId' element={<LaborantDetails />} />
+          <Route exact path='/updatelaborant/:laborantId' element={<UpdateLaborant />} />
+          <Route exact path='/addlaborant' element={<AddLaborant />} />
         </Routes>
     </BrowserRouter>
   );

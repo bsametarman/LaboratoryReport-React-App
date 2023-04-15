@@ -15,7 +15,7 @@ export default function UpdateLaborant() {
 
     useEffect(()=>{
         setTimeout(() => {
-            laborantService.getLaborantById(params.laborantId).then(result => {setLaborant(result.data); setLoading(false);})
+            laborantService.getLaborantById(params.laborantId).then(result => {setLaborant(result.data.data); setLoading(false);})
         }, 500)
     }, [])
 

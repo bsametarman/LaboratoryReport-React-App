@@ -12,7 +12,7 @@ export default function ReportList() {
 
     useEffect(()=>{
         setTimeout(() => {
-            reportService.getReports().then(result =>  {setReports(result.data); setLoading(false);})
+            reportService.getReports().then(result =>  {setReports(result.data.data); setLoading(false);})
         }, 500)
     })
 

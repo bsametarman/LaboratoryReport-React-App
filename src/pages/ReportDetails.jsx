@@ -17,7 +17,7 @@ export default function ReportDetails() {
     
     useEffect(()=>{
         setTimeout(() => {
-            reportService.getReportById(params.reportId).then(result => {setReport(result.data); setLoading(false);})
+            reportService.getReportById(params.reportId).then(result => {setReport(result.data.data); setLoading(false);})
         }, 500)
     }, [])
 
