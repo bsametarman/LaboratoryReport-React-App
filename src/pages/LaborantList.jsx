@@ -32,7 +32,7 @@ export default function LaborantList() {
             <div>
                 <Button inverted color='green' onClick={() => navigate("/AddLaborant")}>Add Laborant</Button>
             </div>
-            <Table celled>
+            <Table celled color='teal'>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>Id</Table.HeaderCell>

@@ -32,7 +32,7 @@ export default function ReportList() {
             <div>
                 <Button inverted color='green' onClick={() => navigate("/AddReport")}>Add Report</Button>
             </div>
-            <Table celled>
+            <Table celled color='yellow'>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>Id</Table.HeaderCell>

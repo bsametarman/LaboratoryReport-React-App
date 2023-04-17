@@ -10,13 +10,7 @@ export default function UpdateReport() {
     const [laborants, setLaborants] = useState([])
     const [isLoading, setLoading] = useState([])
     const [formData, setFormData] = useState()
-
-    const navigate = useNavigate()
-    const laborantService = new LaborantService()
-    const reportService = new ReportService()
-    const imageService = new ImageService()
-
-    let report = {
+    const [getReport, setReport] = useState({
         "fileNo": '',
         "patientName": '',
         "patientSurname": '',
@@ -25,14 +19,31 @@ export default function UpdateReport() {
         "diagnosticDetail": '',
         "reportDate": '',
         "laborantId": ''
-    }
+    })
+    let [getError, setError] = useState(false)
+
+    const navigate = useNavigate()
+    const laborantService = new LaborantService()
+    const reportService = new ReportService()
+    const imageService = new ImageService()
+
+    let addedReport;
+    const error =  getError !== false ?   
+        <div class="ui negative message" style={{marginTop: '20px'}}>
+            <div class="header">
+                Error
+            </div>
+            {getError}
+        </div>
+        : 
+        '';
 
     useEffect(()=>{
         setTimeout(() => {
             laborantService.getAllLaborants().then(result => {setLaborants(result.data.data); setLoading(false);})
         }, 500)
     }, [])
-
+    
     const laborantOptions = []
 
     laborants.forEach((laborant) => {
@@ -44,20 +55,16 @@ export default function UpdateReport() {
     });
 
     async function createData() {
-        let jsonData = {
-            "fileNo": report.fileNo,
-            "patientName": report.patientName,
-            "patientSurname": report.patientSurname,
-            "patientIdentityNumber": report.patientIdentityNumber,
-            "diagnosticTitle": report.diagnosticTitle,
-            "diagnosticDetail": report.diagnosticDetail,
-            "reportDate": report.reportDate,
-            "laborantId": report.laborantId
-        }
-        jsonData = JSON.stringify(jsonData)
+        let jsonData = JSON.stringify(getReport)
+        
+        try {
+            addedReport = await reportService.addReport(jsonData).then(result => result.data)
+            imageService.addImage(formData, addedReport.data.id)
+            navigate("/reports")
 
-        let addedReport = await reportService.addReport(jsonData).then(result => result.data)
-        imageService.addImage(formData, addedReport.id)
+        } catch (error) {
+            setError(error.response.data.message);
+        }
     }
 
     const addImage = async (event) => {
@@ -81,14 +88,14 @@ export default function UpdateReport() {
                     id='form-subcomponent-shorthand-input-first-name'
                     label='Patient Name'
                     placeholder='Patient Name'
-                    onChange={(e) => {report.patientName = e.target.value}}
+                    onChange={(e) => setReport({...getReport, patientName: e.target.value})}
                 />
                 <Form.Input
                     fluid
                     id='form-subcomponent-shorthand-input-last-name'
                     label='Patient Surname'
                     placeholder='Patient Surname'
-                    onChange={(e) => {report.patientSurname = e.target.value}}
+                    onChange={(e) => setReport({...getReport, patientSurname: e.target.value})}
                 />
                 </Form.Group>
                 <Form.Group widths='equal'>
@@ -97,14 +104,14 @@ export default function UpdateReport() {
                     id='form-subcomponent-shorthand-input-first-name'
                     label='File No'
                     placeholder='File No'
-                    onChange={(e) => {report.fileNo = e.target.value}}
+                    onChange={(e) => setReport({...getReport, fileNo: e.target.value})}
                 />
                 <Form.Input
                     fluid
                     id='form-subcomponent-shorthand-input-last-name'
                     label='Identity Number'
                     placeholder='Identity Number'
-                    onChange={(e) => {report.patientIdentityNumber = e.target.value}}
+                    onChange={(e) => setReport({...getReport, patientIdentityNumber: e.target.value})}
                 />
                 </Form.Group>
                 <Form.Group widths='equal'>
@@ -113,14 +120,14 @@ export default function UpdateReport() {
                     id='form-subcomponent-shorthand-input-first-name'
                     label='Diagnostic Title'
                     placeholder='Diagnostic Title'
-                    onChange={(e) => {report.diagnosticTitle = e.target.value}}
+                    onChange={(e) => setReport({...getReport, diagnosticTitle: e.target.value})}
                 />
                 <Form.Input
                     fluid
                     id='form-subcomponent-shorthand-input-last-name'
                     label='Diagnostic Details'
                     placeholder='Diagnostic Details'
-                    onChange={(e) => {report.diagnosticDetail = e.target.value}}
+                    onChange={(e) => setReport({...getReport, diagnosticDetail: e.target.value})}
                 />
                 </Form.Group>
                 <Form.Group widths='equal'>
@@ -129,7 +136,7 @@ export default function UpdateReport() {
                     id='form-subcomponent-shorthand-input-first-name'
                     label='Report Date'
                     placeholder='2023-04-10'
-                    onChange={(e) => {report.reportDate = e.target.value}}
+                    onChange={(e) => setReport({...getReport, reportDate: e.target.value})}
                 />
                 <Form.Field
                     control={Select}
@@ -137,7 +144,7 @@ export default function UpdateReport() {
                     placeholder = 'Choose a laborant'
                     options = {laborantOptions}
                     search
-                    onChange ={(e, data) => {report.laborantId = data.value}}
+                    onChange ={(e, data) => setReport({...getReport, laborantId: data.value})}
                 />
                 </Form.Group>
             </Form>
@@ -152,10 +159,11 @@ export default function UpdateReport() {
                 <Grid>
                     <Grid.Column textAlign="center">
                         <br/>
-                       <button class="ui inverted green button" onClick={() => { createData(); navigate("/reports") }}>Save</button>
+                       <button class="ui inverted green button" onClick={() => { createData(); }}>Save</button>
                     </Grid.Column>
                 </Grid>
             </div>
+            {error}
         </div>
     )
 }
