@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Icon, Menu, Table, Button, ButtonGroup } from 'semantic-ui-react'
+import { Icon, Menu, Table, Button, ButtonGroup, Grid } from 'semantic-ui-react'
 import { useNavigate } from "react-router-dom";
 import LaborantService from './../services/LaborantService'
 
@@ -7,14 +7,27 @@ export default function LaborantList() {
     
     const [laborants, setLaborants] = useState([])
     const [isLoading, setLoading] = useState([])
+    const [searchQuery, setSearchQuery] = useState('')
+    const [filteredLaborants, setFilteredLaborants] = useState([])
     const navigate = useNavigate();
     const laborantService = new LaborantService()
 
     useEffect(()=>{
         setTimeout(() => {
-            laborantService.getAllLaborants().then(result =>  {setLaborants(result.data.data); setLoading(false);})
+            laborantService.getAllLaborants().then(result =>  {setLaborants(result.data.data); setLoading(false); setFilteredLaborants(result.data.data);})
         }, 500)
-    })
+    }, [])
+
+    const handleChange = e => {
+        setSearchQuery(e.target.value)
+    }
+
+    useEffect(() => {
+        let results = laborants.filter(laborant => (
+            String(laborant.laborantName + " " + laborant.laborantSurname).toLowerCase().includes(searchQuery)
+        ))
+        setFilteredLaborants(results)
+    }, [searchQuery])
 
     function getDetails(id){
         console.log(id);
@@ -29,9 +42,19 @@ export default function LaborantList() {
 
     return (
         <div style={{marginLeft: '50px', marginTop: '100px', marginRight: '50px'}}>
-            <div>
-                <Button inverted color='green' onClick={() => navigate("/AddLaborant")}>Add Laborant</Button>
-            </div>
+            <Grid>
+                <Grid.Column>
+                    <Button inverted color='green' onClick={() => navigate("/AddLaborant")}>Add Laborant</Button>
+                </Grid.Column>
+                <Grid.Column width={2} floated='right'>
+                <div class="ui search">
+                    <div class="ui icon input">
+                        <input class="prompt" type="text" placeholder="Search..." onChange={handleChange}/>
+                        <i class="search icon"></i>
+                    </div>
+                </div>
+                </Grid.Column>
+            </Grid>
             <Table celled color='teal'>
                 <Table.Header>
                     <Table.Row>
@@ -46,7 +69,7 @@ export default function LaborantList() {
                 </Table.Header>
 
                 <Table.Body>
-                    {laborants.map((laborant=>(
+                    {filteredLaborants.map((laborant=>(
                         <Table.Row>
                         <Table.Cell>{laborant.id}</Table.Cell>
                         <Table.Cell>{laborant.laborantName}</Table.Cell>
