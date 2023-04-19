@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Icon, Menu, Table, Button, ButtonGroup } from 'semantic-ui-react'
+import { Icon, Menu, Table, Button, ButtonGroup, Grid } from 'semantic-ui-react'
 import { useNavigate } from "react-router-dom";
 import ReportService from './../services/ReportService'
 
@@ -7,14 +7,28 @@ export default function ReportList() {
     
     const [reports, setReports] = useState([])
     const [isLoading, setLoading] = useState([])
+    const [searchQuery, setSearchQuery] = useState('')
+    const [filteredReports, setFilteredReports] = useState([])
     const navigate = useNavigate();
     const reportService = new ReportService()
 
     useEffect(()=>{
         setTimeout(() => {
-            reportService.getReports().then(result =>  {setReports(result.data.data); setLoading(false);})
+           reportService.getReports().then(result =>  {setReports(result.data.data); setLoading(false); setFilteredReports(result.data.data)})
         }, 500)
-    })
+    }, [])
+    
+    const handleChange = e => {
+        setSearchQuery(e.target.value)
+    }
+
+    useEffect(() => {
+        let results = reports.filter(report => (
+            String(report.patientName + " " + report.patientSurname).toLowerCase().includes(searchQuery)
+        ))
+        setFilteredReports(results)
+    }, [searchQuery])
+
 
     function getDetails(id){
         console.log(id);
@@ -29,9 +43,19 @@ export default function ReportList() {
 
     return (
         <div style={{marginLeft: '50px', marginTop: '100px', marginRight: '50px'}}>
-            <div>
-                <Button inverted color='green' onClick={() => navigate("/AddReport")}>Add Report</Button>
-            </div>
+            <Grid>
+                <Grid.Column>
+                    <Button inverted color='green' onClick={() => navigate("/AddReport")}>Add Report</Button>
+                </Grid.Column>
+                <Grid.Column width={2} floated='right'>
+                <div class="ui search">
+                    <div class="ui icon input">
+                        <input class="prompt" type="text" placeholder="Search..." onChange={handleChange}/>
+                        <i class="search icon"></i>
+                    </div>
+                </div>
+                </Grid.Column>
+            </Grid>
             <Table celled color='yellow'>
                 <Table.Header>
                     <Table.Row>
@@ -51,27 +75,28 @@ export default function ReportList() {
                 </Table.Header>
 
                 <Table.Body>
-                    {reports.map((report=>(
+                    {filteredReports.map((report=>(
                         <Table.Row>
-                        <Table.Cell>{report.id}</Table.Cell>
-                        <Table.Cell>{report.fileNo}</Table.Cell>
-                        <Table.Cell>{report.patientName}</Table.Cell>
-                        <Table.Cell>{report.patientSurname}</Table.Cell>
-                        <Table.Cell>{report.patientIdentityNumber}</Table.Cell>
-                        <Table.Cell>{report.diagnosticTitle}</Table.Cell>
-                        <Table.Cell>{report.diagnosticDetail}</Table.Cell>
-                        <Table.Cell>{report.reportDate}</Table.Cell>
-                        <Table.Cell>{report.laborantName}</Table.Cell>
-                        <Table.Cell>{report.laborantSurname}</Table.Cell>
-                        <Table.Cell>{report.laborantAddress}</Table.Cell>
-                        <Table.Cell>
-                            <ButtonGroup>
-                                <Button style={{marginRight: '5px'}} inverted color='green' onClick={() => getDetails(report.id)}>Detail</Button>
-                                <Button inverted color='red' onClick={() => { reportService.deleteReportById(report.id); }} > Delete</Button>
-                            </ButtonGroup>
-                        </Table.Cell>
+                            <Table.Cell>{report.id}</Table.Cell>
+                            <Table.Cell>{report.fileNo}</Table.Cell>
+                            <Table.Cell>{report.patientName}</Table.Cell>
+                            <Table.Cell>{report.patientSurname}</Table.Cell>
+                            <Table.Cell>{report.patientIdentityNumber}</Table.Cell>
+                            <Table.Cell>{report.diagnosticTitle}</Table.Cell>
+                            <Table.Cell>{report.diagnosticDetail}</Table.Cell>
+                            <Table.Cell>{report.reportDate}</Table.Cell>
+                            <Table.Cell>{report.laborantName}</Table.Cell>
+                            <Table.Cell>{report.laborantSurname}</Table.Cell>
+                            <Table.Cell>{report.laborantAddress}</Table.Cell>
+                            <Table.Cell>
+                                <ButtonGroup>
+                                    <Button style={{marginRight: '5px'}} inverted color='green' onClick={() => getDetails(report.id)}>Detail</Button>
+                                    <Button inverted color='red' onClick={() => { reportService.deleteReportById(report.id); }} > Delete</Button>
+                                </ButtonGroup>
+                            </Table.Cell>
                     </Table.Row>
                     )))}
+                    
                 </Table.Body>
 
                 <Table.Footer>
