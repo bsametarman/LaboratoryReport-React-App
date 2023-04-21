@@ -5,6 +5,14 @@ export default class ReportService{
         return axios.get("http://localhost:8080/api/reports/getAll")
     }
 
+    async getActiveReportsDesc(){
+        return axios.get("http://localhost:8080/api/reports/getAllActiveReportsDateDesc")
+    }
+
+    async getActiveReportsAsc(){
+        return axios.get("http://localhost:8080/api/reports/getAllActiveReportsDateAsc")
+    }
+
     async getActiveReports(){
         return axios.get("http://localhost:8080/api/reports/getAllActiveReports")
     }

@@ -9,7 +9,7 @@ export default function ReportList() {
     const [isLoading, setLoading] = useState([])
     const [searchQuery, setSearchQuery] = useState('')
     const [filteredReports, setFilteredReports] = useState([])
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const reportService = new ReportService()
 
     useEffect(()=>{
@@ -35,6 +35,14 @@ export default function ReportList() {
         navigate(`/ReportDetails/${id}`, {state: {reportId: id,}})
     }
 
+    function listDesc(){
+        reportService.getActiveReportsDesc().then(reports => {setFilteredReports(reports.data.data)})
+    }
+
+    function listAsc(){
+        reportService.getActiveReportsAsc().then(reports => {setFilteredReports(reports.data.data)})
+    }
+
     if(isLoading){
         return (
             <div style={{margin: '100px'}}>Loading...</div>
@@ -47,13 +55,21 @@ export default function ReportList() {
                 <Grid.Column>
                     <Button inverted color='green' onClick={() => navigate("/AddReport")}>Add Report</Button>
                 </Grid.Column>
-                <Grid.Column width={2} floated='right'>
-                <div class="ui search">
-                    <div class="ui icon input">
-                        <input class="prompt" type="text" placeholder="Search..." onChange={handleChange}/>
-                        <i class="search icon"></i>
+                <Grid.Column width={2} floated='right' style={{display: 'inline-block'}}>
+                    <div class="ui search">
+                        <div class="ui icon input">
+                            <input class="prompt" type="text" placeholder="Search..." onChange={handleChange}/>
+                            <i class="search icon"></i>
+                        </div>
                     </div>
-                </div>
+                </Grid.Column>
+            </Grid>
+            <Grid>
+                <Grid.Column>
+                    <Button.Group floated='right'>
+                        <Button style={{marginRight: '5px'}} inverted color='violet' onClick={ listDesc } >List Desc</Button>
+                        <Button inverted color='violet' onClick={ listAsc } >List Asc</Button>
+                    </Button.Group>
                 </Grid.Column>
             </Grid>
             <Table celled color='yellow'>
