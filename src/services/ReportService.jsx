@@ -5,12 +5,20 @@ export default class ReportService{
         return axios.get("http://localhost:8080/api/reports/getAll")
     }
 
+    async getActiveReports(){
+        return axios.get("http://localhost:8080/api/reports/getAllActiveReports")
+    }
+
     async getReportById(id){
         return axios.get(`http://localhost:8080/api/reports/getById/${id}`)
     }
 
     async deleteReportById(id){
         axios.delete(`http://localhost:8080/api/reports/delete/${id}`)
+    }
+
+    async changeActiveState(id){
+        return axios.put(`http://localhost:8080/api/reports/changeActiveState/${id}`)
     }
 
     async updateReportById(jsonData){

@@ -110,9 +110,9 @@ export default function ReportDetails() {
             <br/>
             <div>
                 <ButtonGroup>
-                    <Button style={{marginRight: '5px'}} inverted color='red' onClick={() => {reportService.deleteReportById(report.id); navigate('/reports'); }}>Delete Report</Button>
+                    <Button style={{marginRight: '5px'}} inverted color='red' onClick={() => {reportService.changeActiveState(report.id); navigate('/reports'); }}>Delete Report</Button>
                     <Button inverted color='yellow' onClick={() => updateReport(report.id)}>Update Report</Button>
-                </ButtonGroup> 
+                </ButtonGroup>
             </div>
             <br/>
             <Segment clearing color='teal'>

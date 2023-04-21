@@ -14,7 +14,7 @@ export default function LaborantList() {
 
     useEffect(()=>{
         setTimeout(() => {
-            laborantService.getAllLaborants().then(result =>  {setLaborants(result.data.data); setLoading(false); setFilteredLaborants(result.data.data);})
+            laborantService.getAllActiveLaborants().then(result =>  {setLaborants(result.data.data); setLoading(false); setFilteredLaborants(result.data.data);})
         }, 500)
     }, [])
 
@@ -81,7 +81,7 @@ export default function LaborantList() {
                         <Table.Cell>
                             <ButtonGroup>
                                 <Button style={{marginRight: '5px'}} inverted color='green' onClick={() => getDetails(laborant.id)}>Detail</Button>
-                                <Button inverted color='red' onClick={() => { laborantService.deleteLaborantById(laborant.id); }} > Delete</Button>
+                                <Button inverted color='red' onClick={() => { laborantService.changeActiveState(laborant.id); window.location.reload(false); }} > Delete</Button>
                             </ButtonGroup>
                         </Table.Cell>
                     </Table.Row>

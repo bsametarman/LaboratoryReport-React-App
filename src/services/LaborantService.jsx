@@ -6,6 +6,10 @@ export default class LaborantService{
         return await axios.get(`http://localhost:8080/api/laborants/getAll`)
     }
 
+    async getAllActiveLaborants() {
+        return await axios.get(`http://localhost:8080/api/laborants/getAllActiveLaborants`)
+    }
+
     async getLaborantById(laborantId){
         return await axios.get(`http://localhost:8080/api/laborants/getById/${laborantId}`)
     }
@@ -14,8 +18,12 @@ export default class LaborantService{
         axios.delete(`http://localhost:8080/api/laborants/delete/${laborantId}`)
     }
 
+    async changeActiveState(laborantId){
+        return axios.put(`http://localhost:8080/api/laborants/changeActiveState/${laborantId}`)
+    }
+
     async updateLaborantById(jsonData){
-        console.log(jsonData)
+        //console.log(jsonData)
         return axios.put(`http://localhost:8080/api/laborants/update`, jsonData, {headers: {'Content-Type': 'application/json'}})
     }
 

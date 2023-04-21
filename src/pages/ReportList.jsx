@@ -14,7 +14,7 @@ export default function ReportList() {
 
     useEffect(()=>{
         setTimeout(() => {
-           reportService.getReports().then(result =>  {setReports(result.data.data); setLoading(false); setFilteredReports(result.data.data)})
+           reportService.getActiveReports().then(result =>  {setReports(result.data.data); setLoading(false); setFilteredReports(result.data.data)})
         }, 500)
     }, [])
     
@@ -91,7 +91,7 @@ export default function ReportList() {
                             <Table.Cell>
                                 <ButtonGroup>
                                     <Button style={{marginRight: '5px'}} inverted color='green' onClick={() => getDetails(report.id)}>Detail</Button>
-                                    <Button inverted color='red' onClick={() => { reportService.deleteReportById(report.id); }} > Delete</Button>
+                                    <Button inverted color='red' onClick={() => { reportService.changeActiveState(report.id); window.location.reload(false); }} > Delete</Button>
                                 </ButtonGroup>
                             </Table.Cell>
                     </Table.Row>

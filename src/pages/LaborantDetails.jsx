@@ -73,7 +73,7 @@ export default function LaborantDetails() {
             <br/>
             <div>
                 <ButtonGroup>
-                    <Button style={{marginRight: '5px'}} inverted color='red' onClick={() => {laborantService.deleteLaborantById(laborant.id); navigate('/laborants'); }}>Delete Laborant</Button>
+                    <Button style={{marginRight: '5px'}} inverted color='red' onClick={() => {laborantService.changeActiveState(laborant.id); navigate('/laborants'); }}>Delete Laborant</Button>
                     <Button inverted color='yellow' onClick={() => updateLaborant(laborant.id)}>Update Laborant</Button>
                 </ButtonGroup> 
             </div>
