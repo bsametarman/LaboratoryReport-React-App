@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Form, Select, Grid } from 'semantic-ui-react'
+import { Form, Select, Grid, Button } from 'semantic-ui-react'
 import ReportService from '../services/ReportService';
 import LaborantService from './../services/LaborantService';
 import ImageService from '../services/ImageService';
@@ -40,7 +40,7 @@ export default function UpdateReport() {
 
     useEffect(()=>{
         setTimeout(() => {
-            laborantService.getAllLaborants().then(result => {setLaborants(result.data.data); setLoading(false);})
+            laborantService.getAllActiveLaborants().then(result => {setLaborants(result.data.data); setLoading(false);})
         }, 500)
     }, [])
     
@@ -61,7 +61,6 @@ export default function UpdateReport() {
             addedReport = await reportService.addReport(jsonData).then(result => result.data)
             imageService.addImage(formData, addedReport.data.id)
             navigate("/reports")
-
         } catch (error) {
             setError(error.response.data.message);
         }
@@ -159,7 +158,7 @@ export default function UpdateReport() {
                 <Grid>
                     <Grid.Column textAlign="center">
                         <br/>
-                       <button class="ui inverted green button" onClick={() => { createData(); }}>Save</button>
+                       <Button inverted color='green' onClick={() => { createData(); }}>Save</Button>
                     </Grid.Column>
                 </Grid>
             </div>

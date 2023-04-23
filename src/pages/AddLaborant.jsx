@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Grid } from 'semantic-ui-react'
+import { Button, Form, Grid } from 'semantic-ui-react'
 import LaborantService from './../services/LaborantService';
 
 export default function UpdateReport() {
@@ -96,7 +96,7 @@ export default function UpdateReport() {
                 <Grid>
                     <Grid.Column textAlign="center">
                         <br/>
-                       <button class="ui inverted green button" onClick={() => { createData(); }}>Save</button>
+                       <Button inverted color='green' onClick={() => { createData(); }}>Save</Button>
                     </Grid.Column>
                 </Grid>
             </div>
