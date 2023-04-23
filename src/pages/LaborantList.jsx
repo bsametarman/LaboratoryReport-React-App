@@ -24,7 +24,7 @@ export default function LaborantList() {
 
     useEffect(() => {
         let results = laborants.filter(laborant => (
-            String(laborant.laborantName + " " + laborant.laborantSurname).toLowerCase().includes(searchQuery)
+            String(laborant.laborantName + " " + laborant.laborantSurname + " " + laborant.laborantIdentityNumber + " " + laborant.hospitalIdentityNumber).toLowerCase().includes(searchQuery)
         ))
         setFilteredLaborants(results)
     }, [searchQuery])

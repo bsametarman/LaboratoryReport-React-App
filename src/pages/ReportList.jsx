@@ -24,7 +24,7 @@ export default function ReportList() {
 
     useEffect(() => {
         let results = reports.filter(report => (
-            String(report.patientName + " " + report.patientSurname).toLowerCase().includes(searchQuery)
+            String(report.patientName + " " + report.patientSurname + " " + report.patientIdentityNumber + " " + report.laborantName + " " + report.laborantSurname).toLowerCase().includes(searchQuery)
         ))
         setFilteredReports(results)
     }, [searchQuery])
